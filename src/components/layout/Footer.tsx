@@ -1,12 +1,9 @@
 ﻿import { Link } from "react-router-dom";
 import styled from "styled-components";
 
+import { socialIcons } from "../../assets";
 import { routes } from "../../utils/routes";
 import Container from "./Container";
-
-const instagramUrl = new URL("../../../Imagens/instagram.png", import.meta.url).href;
-const facebookUrl = new URL("../../../Imagens/facebook.png", import.meta.url).href;
-const youtubeUrl = new URL("../../../Imagens/youtube.png", import.meta.url).href;
 
 const Wrapper = styled.footer`
   margin-top: auto;
@@ -146,17 +143,17 @@ export function Footer() {
           <SocialLinks>
             <li>
               <SocialLink href="#" aria-label="Instagram da Amoraê">
-                <SocialIcon src={instagramUrl} alt="Instagram" />
+                <SocialIcon src={socialIcons.instagram} alt="Instagram" />
               </SocialLink>
             </li>
             <li>
               <SocialLink href="#" aria-label="Facebook da Amoraê">
-                <SocialIcon src={facebookUrl} alt="Facebook" />
+                <SocialIcon src={socialIcons.facebook} alt="Facebook" />
               </SocialLink>
             </li>
             <li>
               <SocialLink href="#" aria-label="Youtube da Amoraê">
-                <SocialIcon src={youtubeUrl} alt="Youtube" />
+                <SocialIcon src={socialIcons.youtube} alt="Youtube" />
               </SocialLink>
             </li>
           </SocialLinks>

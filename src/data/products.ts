@@ -1,16 +1,5 @@
-﻿import type { Product } from "../types/product";
-
-const jardimBaunilhaImage = new URL("../../output/imagegen/signature-products/jardim-de-baunilha.jpg", import.meta.url).href;
-const tacaSessaoTardeImage = new URL("../../output/imagegen/taca-sessao-da-tarde.jpg", import.meta.url).href;
-const bananaSplitImage = new URL("../../output/imagegen/banana-split-amorae.jpg", import.meta.url).href;
-const milkshakeMorangoImage = new URL("../../output/imagegen/milkshake-morango-de-domingo.jpg", import.meta.url).href;
-const sundaeCerejaImage = new URL("../../output/imagegen/new-products/sundae-cereja-da-casa.jpg", import.meta.url).href;
-const casquinhaBaunilhaImage = new URL("../../output/imagegen/new-products/casquinha-baunilha-da-casa.jpg", import.meta.url).href;
-const ecobagImage = new URL("../../output/imagegen/non-food/ecobag-amorae.jpg", import.meta.url).href;
-const canecaImage = new URL("../../output/imagegen/non-food/caneca-creme-das-5.jpg", import.meta.url).href;
-const copoImage = new URL("../../output/imagegen/non-food/copo-reutilizavel-cereja-retro.jpg", import.meta.url).href;
-const adesivosImage = new URL("../../output/imagegen/non-food/adesivos-doce-lembranca.jpg", import.meta.url).href;
-const velaImage = new URL("../../output/imagegen/non-food/vela-noite-de-pistache.jpg", import.meta.url).href;
+﻿import { productImages } from "../assets";
+import type { Product } from "../types/product";
 
 export const products: Product[] = [
   {
@@ -22,7 +11,7 @@ export const products: Product[] = [
     description:
       "Uma das assinaturas da Amoraê: cremosa, delicada e feita para quem gosta de sabores suaves com presença na mesa.",
     price: 26.9,
-    imageUrl: jardimBaunilhaImage,
+    imageUrl: productImages.jardimDeBaunilha,
     category: "tacas-especiais",
     categoryLabel: "Taças especiais",
     badge: "Assinatura da casa",
@@ -38,7 +27,7 @@ export const products: Product[] = [
     description:
       "Uma taça com presença, pensada para quem gosta de exagero bonito, colheradas cremosas e um toque nostálgico.",
     price: 29.9,
-    imageUrl: tacaSessaoTardeImage,
+    imageUrl: productImages.tacaSessaoDaTarde,
     category: "tacas-especiais",
     categoryLabel: "Taças especiais",
     badge: "Favorito da vitrine",
@@ -54,7 +43,7 @@ export const products: Product[] = [
     description:
       "Um sundae feito para quem procura um clássico com charme retrô, doçura na medida e cara de favorito da casa.",
     price: 23.9,
-    imageUrl: sundaeCerejaImage,
+    imageUrl: productImages.sundaeCerejaDaCasa,
     category: "classicos-da-casa",
     categoryLabel: "Clássicos da casa",
     badge: "Clássico da casa",
@@ -70,7 +59,7 @@ export const products: Product[] = [
     description:
       "Nossa versão mais cotidiana: leve, gostosa e perfeita para quem quer passar, pedir e continuar o dia com um doce na mão.",
     price: 12.9,
-    imageUrl: casquinhaBaunilhaImage,
+    imageUrl: productImages.casquinhaBaunilhaDaCasa,
     category: "entradas-da-casa",
     categoryLabel: "Gelatos da casa",
     badge: "Queridinho do balcão",
@@ -86,7 +75,7 @@ export const products: Product[] = [
     description:
       "A leitura mais retrô da casa: uma banana split generosa, feita para compartilhar e transformar o pedido em ocasião.",
     price: 34.9,
-    imageUrl: bananaSplitImage,
+    imageUrl: productImages.bananaSplitAmorae,
     category: "para-compartilhar",
     categoryLabel: "Para compartilhar",
     badge: "Para dividir",
@@ -101,7 +90,7 @@ export const products: Product[] = [
     description:
       "Um milkshake de morango com cor bonita, sabor familiar e clima de fim de tarde sem pressa.",
     price: 18.9,
-    imageUrl: milkshakeMorangoImage,
+    imageUrl: productImages.milkshakeMorangoDeDomingo,
     category: "milkshakes-e-bebidas",
     categoryLabel: "Milkshakes & bebidas",
     badge: "Pausa gelada",
@@ -116,7 +105,7 @@ export const products: Product[] = [
     description:
       "Ecobag em algodão cru para quem gosta de levar um pedaço da Amoraê no dia a dia, sem abrir mão do charme.",
     price: 39.9,
-    imageUrl: ecobagImage,
+    imageUrl: productImages.ecobagAmorae,
     category: "lembrancas-da-marca",
     categoryLabel: "Lembranças da marca",
     badge: "Leve a marca com você",
@@ -131,7 +120,7 @@ export const products: Product[] = [
     description:
       "Uma peça afetiva e presenteável, pensada para acompanhar a rotina com o mesmo charme das tardes na Amoraê.",
     price: 32.9,
-    imageUrl: canecaImage,
+    imageUrl: productImages.canecaCremeDas5,
     category: "lembrancas-da-marca",
     categoryLabel: "Lembranças da marca",
     badge: "Presente da casa",
@@ -146,7 +135,7 @@ export const products: Product[] = [
     description:
       "Um copo reutilizável com o repertório visual da marca, pensado para quem gosta de detalhes bonitos no cotidiano.",
     price: 24.9,
-    imageUrl: copoImage,
+    imageUrl: productImages.copoReutilizavelCerejaRetro,
     category: "lembrancas-da-marca",
     categoryLabel: "Lembranças da marca",
     badge: "Achado da loja",
@@ -161,7 +150,7 @@ export const products: Product[] = [
     description:
       "Um conjunto de adesivos para presentear, colecionar ou levar a atmosfera da Amoraê para o caderno, a agenda ou o notebook.",
     price: 9.9,
-    imageUrl: adesivosImage,
+    imageUrl: productImages.adesivosDoceLembranca,
     category: "editorial-complementar",
     categoryLabel: "Peças especiais",
     badge: "Colecionável",
@@ -176,7 +165,7 @@ export const products: Product[] = [
     description:
       "Vela perfumada criada para edições especiais, presentes e momentos em que a casa pede um clima mais intimista.",
     price: 49.9,
-    imageUrl: velaImage,
+    imageUrl: productImages.velaNoiteDePistache,
     category: "edicao-especial",
     categoryLabel: "Peças especiais",
     badge: "Edição limitada",

@@ -1,14 +1,13 @@
 ﻿import { Link } from "react-router-dom";
 import styled from "styled-components";
 
+import { heroImageUrl } from "../../assets";
 import { routes } from "../../utils/routes";
 import Button from "../ui/Button";
 import Container from "../layout/Container";
 import PageSection from "../layout/PageSection";
 import Text from "../ui/Text";
 import Title from "../ui/Title";
-
-const heroImageUrl = new URL("../../../output/imagegen/new-products/carta-de-verao.png", import.meta.url).href;
 
 const Wrapper = styled(PageSection)`
   padding-top: ${({ theme }) => `calc(${theme.spacing.xl} + 0.5rem)`};
