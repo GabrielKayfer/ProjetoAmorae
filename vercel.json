@@ -1,0 +1,32 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": "vite",
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
+  "redirects": [
+    {
+      "source": "/catalog",
+      "destination": "/catalogo",
+      "permanent": false
+    },
+    {
+      "source": "/product/:slug",
+      "destination": "/produto/:slug",
+      "permanent": false
+    },
+    {
+      "source": "/cart",
+      "destination": "/carrinho",
+      "permanent": false
+    }
+  ],
+  "routes": [
+    {
+      "handle": "filesystem"
+    },
+    {
+      "src": "/.*",
+      "dest": "/index.html"
+    }
+  ]
+}
