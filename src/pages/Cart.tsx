@@ -29,9 +29,9 @@ export function CartPage() {
   return (
     <PageSection>
       <Container>
-        <Title as="h1" $level="headingLg">Carrinho</Title>
+        <Title as="h1" $level="headingLg">Sua sacola</Title>
         {state.items.length === 0 ? (
-          <Text $tone="muted">Seu carrinho ainda esta vazio.</Text>
+          <Text $tone="muted">Sua sacola ainda está vazia.</Text>
         ) : (
           <Layout>
             <Items>

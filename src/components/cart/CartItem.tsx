@@ -41,7 +41,7 @@ export function CartItem({ item, onAdd, onDecrease, onRemove }: CartItemProps) {
       <Actions>
         <Button onClick={onDecrease} $variant="secondary">-</Button>
         <Button onClick={onAdd} $variant="secondary">+</Button>
-        <Button onClick={onRemove}>Remover</Button>
+        <Button onClick={onRemove}>Tirar da sacola</Button>
       </Actions>
     </Row>
   );
