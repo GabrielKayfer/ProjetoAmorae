@@ -9,23 +9,16 @@ const Wrapper = styled.header`
   position: sticky;
   top: 0;
   z-index: 20;
-  backdrop-filter: blur(12px);
-
-  &::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: ${({ theme }) => theme.colors.brandDark};
-    z-index: -2;
-  }
+  backdrop-filter: blur(16px);
+  box-shadow: 0 10px 22px rgba(2, 89, 81, 0.08);
 `;
 
 const MainRow = styled(Container)`
   display: grid;
-  grid-template-columns: auto minmax(260px, 1fr) auto;
+  grid-template-columns: auto minmax(240px, 1fr) auto;
   align-items: center;
   gap: ${({ theme }) => theme.spacing.lg};
-  padding: ${({ theme }) => `${theme.spacing.lg} 0`};
+  padding: ${({ theme }) => `${theme.spacing.lg} 0 ${theme.spacing.md}`};
 
   @media (max-width: ${({ theme }) => theme.breakpoints.lg}) {
     grid-template-columns: 1fr;
@@ -33,13 +26,18 @@ const MainRow = styled(Container)`
   }
 `;
 
+const TopLayer = styled.div`
+  background: rgba(242, 235, 223, 0.96);
+  border-bottom: 1px solid rgba(2, 89, 81, 0.08);
+`;
+
 const Brand = styled(Link)`
   display: inline-flex;
-  align-items: center;
+  align-items: baseline;
   width: fit-content;
-  color: ${({ theme }) => theme.colors.white};
+  color: ${({ theme }) => theme.colors.brandDark};
   font-family: ${({ theme }) => theme.typography.fontFamily.heading};
-  font-size: ${({ theme }) => theme.typography.scale.headingLg};
+  font-size: clamp(1.8rem, 2.3vw, 2.3rem);
   font-weight: ${({ theme }) => theme.typography.weight.bold};
   letter-spacing: 0.01em;
 `;
@@ -57,11 +55,15 @@ const SearchForm = styled.form`
 const SearchField = styled.input`
   width: 100%;
   min-width: 0;
-  padding: 0.8rem 1rem;
+  padding: 0.85rem 1rem;
   border-radius: ${({ theme }) => theme.radius.pill};
-  border: 1px solid ${({ theme }) => theme.colors.border};
-  background: ${({ theme }) => theme.colors.background};
+  border: 1px solid rgba(2, 89, 81, 0.14);
+  background: rgba(255, 255, 255, 0.48);
   color: ${({ theme }) => theme.colors.text};
+
+  &::placeholder {
+    color: ${({ theme }) => theme.colors.textMuted};
+  }
 
   &:focus-visible {
     outline: 2px solid ${({ theme }) => theme.colors.accent};
@@ -71,21 +73,21 @@ const SearchField = styled.input`
 
 const SearchButton = styled.button`
   min-width: 7rem;
-  padding: 0.8rem 1rem;
+  padding: 0.85rem 1rem;
   border-radius: ${({ theme }) => theme.radius.pill};
-  background: ${({ theme }) => theme.colors.accent};
-  color: ${({ theme }) => theme.colors.brandDark};
+  background: ${({ theme }) => theme.colors.brandDark};
+  color: ${({ theme }) => theme.colors.white};
   font-weight: ${({ theme }) => theme.typography.weight.bold};
   cursor: pointer;
   transition: transform 0.2s ease, background-color 0.2s ease;
 
   &:hover {
     transform: translateY(-1px);
-    background: ${({ theme }) => theme.colors.surfaceAlt};
+    background: ${({ theme }) => theme.colors.brand};
   }
 
   &:focus-visible {
-    outline: 2px solid ${({ theme }) => theme.colors.white};
+    outline: 2px solid ${({ theme }) => theme.colors.brand};
     outline-offset: 2px;
   }
 
@@ -104,7 +106,7 @@ const UtilityNav = styled.nav`
   }
 
   a {
-    color: ${({ theme }) => theme.colors.white};
+    color: ${({ theme }) => theme.colors.brandDark};
     font-size: ${({ theme }) => theme.typography.scale.bodySm};
   }
 
@@ -116,7 +118,6 @@ const UtilityNav = styled.nav`
 `;
 
 const StoreRow = styled.div`
-  border-top: 1px solid rgba(242, 235, 223, 0.18);
   background: ${({ theme }) => theme.colors.brand};
 `;
 
@@ -144,6 +145,7 @@ const StoreNav = styled.nav`
   a {
     color: ${({ theme }) => theme.colors.white};
     font-size: ${({ theme }) => theme.typography.scale.bodySm};
+    font-weight: ${({ theme }) => theme.typography.weight.medium};
   }
 `;
 
@@ -151,10 +153,11 @@ const CartLink = styled(Link)`
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: 2.75rem;
+  min-height: 2.6rem;
   padding: 0 ${({ theme }) => theme.spacing.lg};
   border-radius: ${({ theme }) => theme.radius.pill};
-  border: 1px solid rgba(242, 235, 223, 0.34);
+  background: rgba(242, 235, 223, 0.22);
+  border: 1px solid rgba(242, 235, 223, 0.36);
   color: ${({ theme }) => theme.colors.white};
   font-weight: ${({ theme }) => theme.typography.weight.semibold};
 `;
@@ -176,49 +179,51 @@ export function Header() {
 
   return (
     <Wrapper>
-      <MainRow>
-        <Brand to={routes.home}>Amorae</Brand>
+      <TopLayer>
+        <MainRow>
+          <Brand to={routes.home}>Amoraê</Brand>
 
-        <SearchForm onSubmit={(event) => event.preventDefault()} role="search">
-          <SrOnly htmlFor="header-search">Buscar produtos</SrOnly>
-          <SearchField
-            id="header-search"
-            type="search"
-            placeholder="Busque bowls, frutas e bebidas"
-          />
-          <SearchButton type="submit">Buscar</SearchButton>
-        </SearchForm>
+          <SearchForm onSubmit={(event) => event.preventDefault()} role="search">
+            <SrOnly htmlFor="header-search">Buscar produtos</SrOnly>
+            <SearchField
+              id="header-search"
+              type="search"
+              placeholder="Busque gelatos, taças, milkshakes e clássicos da casa"
+            />
+            <SearchButton type="submit">Buscar</SearchButton>
+          </SearchForm>
 
-        <UtilityNav aria-label="Acesso rapido">
-          <ul>
-            <li>
-              <Link to={routes.home + "#destaques"}>Comprar agora</Link>
-            </li>
-            <li>
-              <Link to={routes.home + "#beneficios"}>Como funciona</Link>
-            </li>
-            <li>
-              <Link to={routes.home + "#footer-contact"}>Contato</Link>
-            </li>
-          </ul>
-        </UtilityNav>
-      </MainRow>
+          <UtilityNav aria-label="Acesso rápido">
+            <ul>
+              <li>
+                <Link to={routes.home + "#destaques"}>Favoritos</Link>
+              </li>
+              <li>
+                <Link to={routes.home + "#beneficios"}>A marca</Link>
+              </li>
+              <li>
+                <Link to={routes.home + "#footer-contact"}>Contato</Link>
+              </li>
+            </ul>
+          </UtilityNav>
+        </MainRow>
+      </TopLayer>
 
       <StoreRow>
         <StoreContent>
-          <StoreNav aria-label="Navegacao da loja">
+          <StoreNav aria-label="Navegação da loja">
             <ul>
               <li>
-                <Link to={routes.catalog}>Catalogo</Link>
+                <Link to={routes.catalog}>Cardápio</Link>
               </li>
               <li>
-                <Link to={routes.home + "#categorias"}>Categorias</Link>
+                <Link to={routes.home + "#categorias"}>Coleções</Link>
               </li>
               <li>
-                <Link to={routes.home + "#destaques"}>Destaques</Link>
+                <Link to={routes.home + "#destaques"}>Favoritos da casa</Link>
               </li>
               <li>
-                <Link to={routes.home + "#monte-seu-pedido"}>Monte seu pedido</Link>
+                <Link to={routes.home + "#monte-seu-pedido"}>Monte sua taça</Link>
               </li>
             </ul>
           </StoreNav>

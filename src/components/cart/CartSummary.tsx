@@ -26,8 +26,8 @@ export function CartSummary({ items }: CartSummaryProps) {
 
   return (
     <Panel>
-      <Title as="h2" $level="headingSm">Resumo</Title>
-      <Text $tone="muted">{items.length} item(ns) distintos</Text>
+      <Title as="h2" $level="headingSm">Resumo do pedido</Title>
+      <Text $tone="muted">{items.length} escolha(s) na sacola</Text>
       <Text>Total: {formatCurrency(total)}</Text>
     </Panel>
   );

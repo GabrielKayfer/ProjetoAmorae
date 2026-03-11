@@ -4,21 +4,18 @@ import styled from "styled-components";
 import { CategoryHighlights } from "../components/home/CategoryHighlights";
 import { FeaturedProducts } from "../components/home/FeaturedProducts";
 import { Hero } from "../components/home/Hero";
-import Button from "../components/ui/Button";
 import Container from "../components/layout/Container";
 import PageSection from "../components/layout/PageSection";
+import { ProductList } from "../components/product/ProductList";
+import Button from "../components/ui/Button";
 import Text from "../components/ui/Text";
 import Title from "../components/ui/Title";
 import { productsService } from "../services/products.service";
 import { routes } from "../utils/routes";
 
-const BenefitSection = styled(PageSection)`
-  padding-top: 0;
-`;
-
 const SectionHeader = styled.div`
-  max-width: 48rem;
-  margin-bottom: ${({ theme }) => theme.spacing.xl};
+  max-width: 44rem;
+  margin-bottom: ${({ theme }) => `calc(${theme.spacing.xl} + 0.5rem)`};
 `;
 
 const Eyebrow = styled(Text)`
@@ -31,10 +28,14 @@ const Eyebrow = styled(Text)`
   font-size: ${({ theme }) => theme.typography.scale.caption};
 `;
 
+const BenefitSection = styled(PageSection)`
+  padding-top: ${({ theme }) => `calc(${theme.spacing.xl} + 0.5rem)`};
+`;
+
 const BenefitGrid = styled.div`
   display: grid;
   gap: ${({ theme }) => theme.spacing.lg};
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: 1.2fr 1fr 1fr;
 
   @media (max-width: ${({ theme }) => theme.breakpoints.lg}) {
     grid-template-columns: 1fr;
@@ -43,33 +44,70 @@ const BenefitGrid = styled.div`
 
 const BenefitCard = styled.article`
   padding: ${({ theme }) => theme.spacing.xl};
-  border-radius: ${({ theme }) => theme.radius.lg};
-  background: ${({ theme }) => theme.colors.surface};
-  border: 1px solid ${({ theme }) => theme.colors.border};
+  border-radius: 1.75rem;
+  background: linear-gradient(180deg, rgba(242, 235, 223, 0.88) 0%, rgba(255, 255, 255, 0.2) 100%);
+  border: 1px solid rgba(2, 89, 81, 0.08);
   box-shadow: ${({ theme }) => theme.shadows.md};
 `;
 
+const BenefitQuote = styled(Text)`
+  margin-top: ${({ theme }) => theme.spacing.lg};
+  color: ${({ theme }) => theme.colors.brandDark};
+  font-family: ${({ theme }) => theme.typography.fontFamily.heading};
+  font-size: 1.2rem;
+  line-height: 1.5;
+`;
+
 const BuilderSection = styled(PageSection)`
-  padding-top: ${({ theme }) => theme.spacing.xl};
+  padding-top: ${({ theme }) => `calc(${theme.spacing.xl} + 0.5rem)`};
 `;
 
 const BuilderLayout = styled(Container)`
   display: grid;
-  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  grid-template-columns: minmax(0, 0.86fr) minmax(0, 1.14fr);
   gap: ${({ theme }) => theme.spacing.xl};
-  align-items: center;
+  align-items: start;
 
   @media (max-width: ${({ theme }) => theme.breakpoints.lg}) {
     grid-template-columns: 1fr;
   }
 `;
 
+const BuilderCopy = styled.div`
+  display: grid;
+  gap: ${({ theme }) => theme.spacing.lg};
+  padding-top: ${({ theme }) => theme.spacing.md};
+`;
+
 const BuilderPanel = styled.div`
   padding: ${({ theme }) => theme.spacing.xl};
-  border-radius: ${({ theme }) => theme.radius.lg};
-  background: linear-gradient(180deg, ${({ theme }) => theme.colors.surface} 0%, ${({ theme }) => theme.colors.surfaceAlt} 100%);
-  border: 1px solid ${({ theme }) => theme.colors.border};
+  border-radius: 1.85rem;
+  background: linear-gradient(180deg, rgba(242, 235, 223, 0.92) 0%, rgba(242, 153, 133, 0.22) 100%);
+  border: 1px solid rgba(2, 89, 81, 0.08);
   box-shadow: ${({ theme }) => theme.shadows.md};
+`;
+
+const ChipRow = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: ${({ theme }) => theme.spacing.sm};
+`;
+
+const ChoiceChip = styled.span`
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.35rem;
+  padding: 0 ${({ theme }) => theme.spacing.md};
+  border-radius: ${({ theme }) => theme.radius.pill};
+  background: rgba(242, 235, 223, 0.72);
+  color: ${({ theme }) => theme.colors.brandDark};
+  font-size: ${({ theme }) => theme.typography.scale.bodySm};
+`;
+
+const StepGrid = styled.div`
+  display: grid;
+  gap: ${({ theme }) => theme.spacing.md};
+  margin-top: ${({ theme }) => theme.spacing.lg};
 `;
 
 const BuilderStep = styled.div`
@@ -77,11 +115,9 @@ const BuilderStep = styled.div`
   grid-template-columns: 3rem minmax(0, 1fr);
   gap: ${({ theme }) => theme.spacing.md};
   align-items: start;
-  padding: ${({ theme }) => theme.spacing.md} 0;
-
-  & + & {
-    border-top: 1px solid rgba(2, 89, 81, 0.12);
-  }
+  padding: ${({ theme }) => theme.spacing.md};
+  border-radius: 1.2rem;
+  background: rgba(242, 235, 223, 0.58);
 `;
 
 const StepIndex = styled.span`
@@ -95,34 +131,72 @@ const StepIndex = styled.span`
   font-weight: ${({ theme }) => theme.typography.weight.bold};
 `;
 
+const ExtensionSection = styled(PageSection)`
+  padding-top: ${({ theme }) => `calc(${theme.spacing.xl} + 0.5rem)`};
+  background: linear-gradient(180deg, rgba(242, 153, 133, 0.06) 0%, rgba(242, 235, 223, 0) 100%);
+`;
+
+const EditorialSection = styled(PageSection)`
+  padding-top: ${({ theme }) => `calc(${theme.spacing.xl} + 0.5rem)`};
+`;
+
+const HeaderRow = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  gap: ${({ theme }) => theme.spacing.lg};
+  margin-bottom: ${({ theme }) => `calc(${theme.spacing.xl} + 0.5rem)`};
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+`;
+
+const HeaderCopy = styled.div`
+  max-width: 42rem;
+`;
+
 const AboutSection = styled(PageSection)`
-  background: rgba(242, 99, 99, 0.08);
+  padding-top: ${({ theme }) => `calc(${theme.spacing.xl} + 0.5rem)`};
+  background: linear-gradient(180deg, rgba(242, 99, 99, 0.08) 0%, rgba(242, 153, 133, 0.05) 100%);
 `;
 
 const AboutCard = styled(Container)`
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(18rem, 0.9fr);
-  gap: ${({ theme }) => theme.spacing.xl};
-  align-items: center;
-  padding: ${({ theme }) => theme.spacing.xl};
-  border-radius: ${({ theme }) => theme.radius.lg};
-  background: ${({ theme }) => theme.colors.surface};
-  border: 1px solid ${({ theme }) => theme.colors.border};
+  gap: ${({ theme }) => theme.spacing.lg};
+  max-width: 56rem;
+  padding: ${({ theme }) => `calc(${theme.spacing.xl} + 0.5rem)`};
+  border-radius: 2rem;
+  background: rgba(242, 235, 223, 0.82);
+  border: 1px solid rgba(2, 89, 81, 0.08);
+  box-shadow: ${({ theme }) => theme.shadows.md};
+  text-align: center;
+`;
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.lg}) {
-    grid-template-columns: 1fr;
-  }
+const AboutManifesto = styled(Text)`
+  max-width: 38rem;
+  margin: 0 auto;
+  font-size: 1.05rem;
+  line-height: ${({ theme }) => theme.typography.lineHeight.relaxed};
 `;
 
 const ActionRow = styled.div`
   display: flex;
   flex-wrap: wrap;
   gap: ${({ theme }) => theme.spacing.md};
-  margin-top: ${({ theme }) => theme.spacing.xl};
+  margin-top: ${({ theme }) => theme.spacing.sm};
+`;
+
+const InlineLink = styled.a`
+  color: ${({ theme }) => theme.colors.brandDark};
+  font-weight: ${({ theme }) => theme.typography.weight.bold};
 `;
 
 export function HomePage() {
   const featuredProducts = productsService.listFeatured();
+  const brandExtensionProducts = productsService.listByLine("brand-extension");
+  const editorialProducts = productsService.listByLine("editorial");
 
   return (
     <>
@@ -133,39 +207,39 @@ export function HomePage() {
       <BenefitSection id="beneficios">
         <Container>
           <SectionHeader>
-            <Eyebrow>Confianca e praticidade</Eyebrow>
+            <Eyebrow>O jeito Amoraê</Eyebrow>
             <Title as="h2" $level="headingLg">
-              Elementos que deixam a home com cara de loja e sustentam a proxima
-              evolucao.
+              A Amoraê mistura charme retrô, sabores afetivos e uma beleza leve
+              que faz qualquer pausa parecer mais especial.
             </Title>
           </SectionHeader>
 
           <BenefitGrid>
             <BenefitCard>
               <Title as="h3" $level="headingSm">
-                Pedidos guiados
+                Feito para dar vontade
+              </Title>
+              <BenefitQuote>
+                Taças, gelatos e clássicos da casa pensados para abrir o apetite
+                no primeiro olhar e confirmar na primeira colherada.
+              </BenefitQuote>
+            </BenefitCard>
+            <BenefitCard>
+              <Title as="h3" $level="headingSm">
+                Doce na medida
               </Title>
               <Text $tone="muted">
-                A navegacao agora prioriza descoberta, escolha e proximos passos
-                de compra dentro da linguagem da Amorae.
+                Receitas cremosas, familiares e bem resolvidas, com cara de casa
+                e acabamento de vitrine bonita.
               </Text>
             </BenefitCard>
             <BenefitCard>
               <Title as="h3" $level="headingSm">
-                Base para integracao
+                Para voltar sempre
               </Title>
               <Text $tone="muted">
-                Cards, destaques e chamadas estao prontos para receber dados reais
-                sem reestruturar a home React.
-              </Text>
-            </BenefitCard>
-            <BenefitCard>
-              <Title as="h3" $level="headingSm">
-                Marca preservada
-              </Title>
-              <Text $tone="muted">
-                Cores, atmosfera e respiro visual do legado foram migrados para o
-                modelo componentizado da nova arquitetura.
+                Uma experiência pensada para quem gosta de passar, escolher sem
+                pressa e ter um lugar favorito para repetir.
               </Text>
             </BenefitCard>
           </BenefitGrid>
@@ -174,18 +248,25 @@ export function HomePage() {
 
       <BuilderSection id="monte-seu-pedido">
         <BuilderLayout>
-          <div>
-            <Eyebrow>Proxima etapa natural</Eyebrow>
-            <Title as="h2" $level="headingLg">
-              Uma area simples para antecipar a experiencia de montar o pedido.
-            </Title>
+          <BuilderCopy>
+            <div>
+              <Eyebrow>Monte seu pedido</Eyebrow>
+              <Title as="h2" $level="headingLg">
+                Da taça autoral ao milkshake do fim de tarde, sempre tem um jeito de pedir a sua Amoraê.
+              </Title>
+            </div>
             <Text $tone="muted">
-              Ainda e uma secao visual, mas ja prepara a interface para tamanho,
-              base, frutas e adicionais sem misturar isso com backend agora.
+              Uma prévia leve para combinar sabores, coberturas e pequenos detalhes antes de escolher no cardápio.
             </Text>
+            <ChipRow>
+              <ChoiceChip>Camadas cremosas</ChoiceChip>
+              <ChoiceChip>Clássicos para dividir</ChoiceChip>
+              <ChoiceChip>Milkshakes delicados</ChoiceChip>
+              <ChoiceChip>Coberturas autorais</ChoiceChip>
+            </ChipRow>
             <ActionRow>
               <Link to={routes.catalog}>
-                <Button as="span">Ver produtos</Button>
+                <Button as="span">Ver cardápio</Button>
               </Link>
               <Link to={routes.cart}>
                 <Button as="span" $variant="secondary">
@@ -193,63 +274,95 @@ export function HomePage() {
                 </Button>
               </Link>
             </ActionRow>
-          </div>
+          </BuilderCopy>
 
           <BuilderPanel>
-            <BuilderStep>
-              <StepIndex>1</StepIndex>
-              <div>
-                <Title as="h3" $level="headingSm">
-                  Escolha a base
-                </Title>
-                <Text $tone="muted">
-                  Acai, salada pronta ou bebida natural em uma futura selecao por
-                  variacoes.
-                </Text>
-              </div>
-            </BuilderStep>
-            <BuilderStep>
-              <StepIndex>2</StepIndex>
-              <div>
-                <Title as="h3" $level="headingSm">
-                  Adicione complementos
-                </Title>
-                <Text $tone="muted">
-                  Frutas, granola, caldas e toppings entram depois como estados de
-                  interface reais.
-                </Text>
-              </div>
-            </BuilderStep>
-            <BuilderStep>
-              <StepIndex>3</StepIndex>
-              <div>
-                <Title as="h3" $level="headingSm">
-                  Revise e envie
-                </Title>
-                <Text $tone="muted">
-                  A composicao ja antecipa o caminho natural para carrinho e
-                  checkout no proximo ciclo.
-                </Text>
-              </div>
-            </BuilderStep>
+            <Title as="h3" $level="headingSm">
+              Como começar
+            </Title>
+            <StepGrid>
+              <BuilderStep>
+                <StepIndex>1</StepIndex>
+                <div>
+                  <Title as="h3" $level="headingSm">
+                    Escolha o clima do pedido
+                  </Title>
+                  <Text $tone="muted">
+                    Uma taça da vitrine, um clássico para dividir ou uma bebida gelada para acompanhar o passeio.
+                  </Text>
+                </div>
+              </BuilderStep>
+              <BuilderStep>
+                <StepIndex>2</StepIndex>
+                <div>
+                  <Title as="h3" $level="headingSm">
+                    Combine detalhes e camadas
+                  </Title>
+                  <Text $tone="muted">
+                    Coberturas, contrastes e texturas que deixam o pedido ainda mais bonito e gostoso.
+                  </Text>
+                </div>
+              </BuilderStep>
+              <BuilderStep>
+                <StepIndex>3</StepIndex>
+                <div>
+                  <Title as="h3" $level="headingSm">
+                    Acrescente um mimo
+                  </Title>
+                  <Text $tone="muted">
+                    Um jeito simples de levar a experiência um pouco além da sobremesa.
+                  </Text>
+                </div>
+              </BuilderStep>
+            </StepGrid>
           </BuilderPanel>
         </BuilderLayout>
       </BuilderSection>
 
+      <ExtensionSection>
+        <Container>
+          <HeaderRow>
+            <HeaderCopy>
+              <Eyebrow>Leve a Amoraê com você</Eyebrow>
+              <Title as="h2" $level="headingLg">
+                Lembranças da marca para continuar a pausa bonita fora da loja.
+              </Title>
+              <Text $tone="muted">
+                Ecobag, caneca e copo reutilizável pensados para o dia a dia, com o mesmo charme da casa.
+              </Text>
+            </HeaderCopy>
+            <InlineLink href={routes.catalog}>Ver cardápio completo</InlineLink>
+          </HeaderRow>
+          <ProductList products={brandExtensionProducts} />
+        </Container>
+      </ExtensionSection>
+
+      <EditorialSection>
+        <Container>
+          <HeaderRow>
+            <HeaderCopy>
+              <Eyebrow>Presentes & peças especiais</Eyebrow>
+              <Title as="h2" $level="headingLg">
+                Detalhes para presentear, colecionar ou guardar a atmosfera da casa.
+              </Title>
+              <Text $tone="muted">
+                Itens de tiragem especial que ampliam o universo da Amoraê sem disputar espaço com o cardápio principal.
+              </Text>
+            </HeaderCopy>
+          </HeaderRow>
+          <ProductList products={editorialProducts} />
+        </Container>
+      </EditorialSection>
+
       <AboutSection>
         <AboutCard>
-          <div>
-            <Eyebrow>Sobre a marca</Eyebrow>
-            <Title as="h2" $level="headingLg">
-              O institucional segue presente, mas agora em apoio a experiencia
-              comercial da home.
-            </Title>
-          </div>
-          <Text $tone="muted">
-            A Amorae continua comunicando leveza, frescor e cuidado com os
-            ingredientes. A diferenca e que esse discurso agora sustenta a
-            navegacao da loja em vez de competir com ela.
-          </Text>
+          <Eyebrow>Manifesto Amoraê</Eyebrow>
+          <Title as="h2" $level="headingLg">
+            A Amoraê nasceu para servir pausas doces com charme, memória afetiva e vontade de voltar.
+          </Title>
+          <AboutManifesto $tone="muted">
+            Entre taças, gelatos, clássicos da casa e lembranças da marca, cada detalhe foi pensado para fazer do simples um momento especial.
+          </AboutManifesto>
         </AboutCard>
       </AboutSection>
     </>

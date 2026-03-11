@@ -11,9 +11,9 @@ export function NotFoundPage() {
   return (
     <PageSection>
       <Container>
-        <Title as="h1" $level="headingLg">Pagina nao encontrada</Title>
+        <Title as="h1" $level="headingLg">Página não encontrada</Title>
         <Text $tone="muted">
-          A rota solicitada nao existe nesta fase inicial do projeto.
+          Essa página saiu da nossa vitrine ou ainda não está disponível.
         </Text>
         <Link to={routes.home}>
           <Button as="span">Voltar para a home</Button>

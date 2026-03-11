@@ -17,7 +17,7 @@ const Image = styled.img`
   aspect-ratio: 1 / 1;
   object-fit: cover;
   border-radius: ${({ theme }) => theme.radius.md};
-  background: ${({ theme }) => theme.colors.surfaceAlt};
+  background: ${({ theme }) => theme.colors.background};
 `;
 
 export function ProductGallery({ imageUrl, name }: ProductGalleryProps) {

@@ -27,9 +27,9 @@ export function ProductPage() {
     return (
       <PageSection>
         <Container>
-          <Title as="h1" $level="headingLg">Produto nao encontrado</Title>
+          <Title as="h1" $level="headingLg">Produto não encontrado</Title>
           <Text $tone="muted">
-            A base de dados inicial ainda nao possui esse item.
+            Esse sabor ainda não entrou na nossa vitrine.
           </Text>
         </Container>
       </PageSection>

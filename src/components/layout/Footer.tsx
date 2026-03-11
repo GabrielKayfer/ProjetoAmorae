@@ -11,7 +11,7 @@ const youtubeUrl = new URL("../../../Imagens/youtube.png", import.meta.url).href
 const Wrapper = styled.footer`
   margin-top: auto;
   padding-top: ${({ theme }) => theme.spacing.xl};
-  background: linear-gradient(180deg, ${({ theme }) => theme.colors.brandDark} 0%, ${({ theme }) => theme.colors.brand} 100%);
+  background: ${({ theme }) => theme.colors.brandDark};
   color: ${({ theme }) => theme.colors.white};
 `;
 
@@ -107,10 +107,9 @@ export function Footer() {
     <Wrapper>
       <Content>
         <Brand>
-          <BrandMark to={routes.home}>Amorae</BrandMark>
+          <BrandMark to={routes.home}>Amoraê</BrandMark>
           <Description>
-            Frutas, bowls e bebidas com identidade leve e uma base React pronta
-            para evoluir em catalogo, pagina de produto e carrinho.
+            Gelatos, taças e bebidas com charme retrô, receitas da casa e uma pausa bonita para qualquer hora do dia.
           </Description>
         </Brand>
 
@@ -118,13 +117,13 @@ export function Footer() {
           <Heading>Loja</Heading>
           <FooterLinks>
             <li>
-              <Link to={routes.catalog}>Catalogo</Link>
+              <Link to={routes.catalog}>Cardápio</Link>
             </li>
             <li>
-              <Link to={routes.home + "#categorias"}>Categorias</Link>
+              <Link to={routes.home + "#categorias"}>Coleções</Link>
             </li>
             <li>
-              <Link to={routes.home + "#destaques"}>Destaques</Link>
+              <Link to={routes.home + "#destaques"}>Favoritos</Link>
             </li>
           </FooterLinks>
         </Column>
@@ -138,7 +137,7 @@ export function Footer() {
             <li>
               <a href="mailto:contato@amorae.com.br">contato@amorae.com.br</a>
             </li>
-            <li>Rua dos Lyrios, 51 - Centro - Vitoria/ES</li>
+            <li>Rua dos Lírios, 51 - Centro - Vitória/ES</li>
           </FooterLinks>
         </Column>
 
@@ -146,17 +145,17 @@ export function Footer() {
           <Heading>Redes</Heading>
           <SocialLinks>
             <li>
-              <SocialLink href="#" aria-label="Instagram da Amorae">
+              <SocialLink href="#" aria-label="Instagram da Amoraê">
                 <SocialIcon src={instagramUrl} alt="Instagram" />
               </SocialLink>
             </li>
             <li>
-              <SocialLink href="#" aria-label="Facebook da Amorae">
+              <SocialLink href="#" aria-label="Facebook da Amoraê">
                 <SocialIcon src={facebookUrl} alt="Facebook" />
               </SocialLink>
             </li>
             <li>
-              <SocialLink href="#" aria-label="Youtube da Amorae">
+              <SocialLink href="#" aria-label="Youtube da Amoraê">
                 <SocialIcon src={youtubeUrl} alt="Youtube" />
               </SocialLink>
             </li>
@@ -164,7 +163,7 @@ export function Footer() {
         </Column>
       </Content>
 
-      <Bottom>&copy; 2026 Amorae. Todos os direitos reservados.</Bottom>
+      <Bottom>&copy; 2026 Amoraê. Todos os direitos reservados.</Bottom>
     </Wrapper>
   );
 }

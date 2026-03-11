@@ -12,7 +12,8 @@ interface FeaturedProductsProps {
 }
 
 const Wrapper = styled(PageSection)`
-  background: rgba(242, 166, 73, 0.08);
+  margin-top: ${({ theme }) => theme.spacing.xl};
+  background: linear-gradient(180deg, rgba(242, 166, 73, 0.08) 0%, rgba(242, 153, 133, 0.04) 100%);
 `;
 
 const Header = styled.div`
@@ -20,7 +21,7 @@ const Header = styled.div`
   justify-content: space-between;
   align-items: flex-end;
   gap: ${({ theme }) => theme.spacing.lg};
-  margin-bottom: ${({ theme }) => theme.spacing.xl};
+  margin-bottom: ${({ theme }) => `calc(${theme.spacing.xl} + 0.5rem)`};
 
   @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
     flex-direction: column;
@@ -29,7 +30,7 @@ const Header = styled.div`
 `;
 
 const Copy = styled.div`
-  max-width: 44rem;
+  max-width: 42rem;
 `;
 
 const Eyebrow = styled(Text)`
@@ -43,6 +44,7 @@ const Eyebrow = styled(Text)`
 `;
 
 const SupportingText = styled(Text)`
+  max-width: 38rem;
   margin-top: ${({ theme }) => theme.spacing.sm};
 `;
 
@@ -57,17 +59,16 @@ export function FeaturedProducts({ products }: FeaturedProductsProps) {
       <Container>
         <Header>
           <Copy>
-            <Eyebrow>Vitrine inicial</Eyebrow>
+            <Eyebrow>Favoritos da casa</Eyebrow>
             <Title as="h2" $level="headingLg">
-              Produtos em destaque com card reutilizavel para evoluir em
-              catalogo.
+              Os pedidos que melhor apresentam a Amoraê logo no primeiro olhar.
             </Title>
             <SupportingText $tone="muted">
-              A linguagem visual do legado agora vive em uma vitrine pronta para
-              receber dados reais sem reescrever a home.
+              Taças, clássicos e escolhas certeiras para quem quer começar pelo
+              que a vitrine tem de mais querido.
             </SupportingText>
           </Copy>
-          <InlineLink href="#categorias">Ver todas as categorias</InlineLink>
+          <InlineLink href="#categorias">Ver categorias</InlineLink>
         </Header>
         <ProductList products={products} />
       </Container>

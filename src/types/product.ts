@@ -17,5 +17,9 @@ export interface Product {
   price: number;
   imageUrl: string;
   category: string;
+  categoryLabel: string;
+  badge: string;
+  sizeLabel?: string;
+  line: "core" | "brand-extension" | "editorial";
   featured?: boolean;
 }
