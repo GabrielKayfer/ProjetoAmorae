@@ -38,6 +38,13 @@ export const GlobalStyle = createGlobalStyle`
     text-decoration: none;
   }
 
+  a[href],
+  button,
+  [role="button"],
+  summary {
+    cursor: pointer;
+  }
+
   button {
     border: 0;
     background: transparent;

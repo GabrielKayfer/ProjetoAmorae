@@ -1,16 +1,16 @@
 ﻿import type { Product } from "../types/product";
 
-const jardimBaunilhaImage = new URL("../../output/imagegen/signature-products/jardim-de-baunilha.png", import.meta.url).href;
-const tacaSessaoTardeImage = new URL("../../output/imagegen/taca-sessao-da-tarde.png", import.meta.url).href;
-const bananaSplitImage = new URL("../../output/imagegen/banana-split-amorae.png", import.meta.url).href;
-const milkshakeMorangoImage = new URL("../../output/imagegen/milkshake-morango-de-domingo.png", import.meta.url).href;
-const sundaeCerejaImage = new URL("../../output/imagegen/new-products/sundae-cereja-da-casa.png", import.meta.url).href;
-const casquinhaBaunilhaImage = new URL("../../output/imagegen/new-products/casquinha-baunilha-da-casa.png", import.meta.url).href;
-const ecobagImage = new URL("../../output/imagegen/non-food/ecobag-amorae.png", import.meta.url).href;
-const canecaImage = new URL("../../output/imagegen/non-food/caneca-creme-das-5.png", import.meta.url).href;
-const copoImage = new URL("../../output/imagegen/non-food/copo-reutilizavel-cereja-retro.png", import.meta.url).href;
-const adesivosImage = new URL("../../output/imagegen/non-food/adesivos-doce-lembranca.png", import.meta.url).href;
-const velaImage = new URL("../../output/imagegen/non-food/vela-noite-de-pistache.png", import.meta.url).href;
+const jardimBaunilhaImage = new URL("../../output/imagegen/signature-products/jardim-de-baunilha.jpg", import.meta.url).href;
+const tacaSessaoTardeImage = new URL("../../output/imagegen/taca-sessao-da-tarde.jpg", import.meta.url).href;
+const bananaSplitImage = new URL("../../output/imagegen/banana-split-amorae.jpg", import.meta.url).href;
+const milkshakeMorangoImage = new URL("../../output/imagegen/milkshake-morango-de-domingo.jpg", import.meta.url).href;
+const sundaeCerejaImage = new URL("../../output/imagegen/new-products/sundae-cereja-da-casa.jpg", import.meta.url).href;
+const casquinhaBaunilhaImage = new URL("../../output/imagegen/new-products/casquinha-baunilha-da-casa.jpg", import.meta.url).href;
+const ecobagImage = new URL("../../output/imagegen/non-food/ecobag-amorae.jpg", import.meta.url).href;
+const canecaImage = new URL("../../output/imagegen/non-food/caneca-creme-das-5.jpg", import.meta.url).href;
+const copoImage = new URL("../../output/imagegen/non-food/copo-reutilizavel-cereja-retro.jpg", import.meta.url).href;
+const adesivosImage = new URL("../../output/imagegen/non-food/adesivos-doce-lembranca.jpg", import.meta.url).href;
+const velaImage = new URL("../../output/imagegen/non-food/vela-noite-de-pistache.jpg", import.meta.url).href;
 
 export const products: Product[] = [
   {
@@ -184,3 +184,4 @@ export const products: Product[] = [
     line: "editorial",
   },
 ];
+

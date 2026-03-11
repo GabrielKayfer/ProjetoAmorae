@@ -1,8 +1,8 @@
 ﻿import type { Category } from "../types/product";
 
-const tacasEspeciaisImage = new URL("../../output/imagegen/taca-doce-lembranca.png", import.meta.url).href;
-const bananaSplitImage = new URL("../../output/imagegen/banana-split-amorae.png", import.meta.url).href;
-const milkshakeMorangoImage = new URL("../../output/imagegen/milkshake-morango-de-domingo.png", import.meta.url).href;
+const tacasEspeciaisImage = new URL("../../output/imagegen/taca-doce-lembranca.jpg", import.meta.url).href;
+const bananaSplitImage = new URL("../../output/imagegen/banana-split-amorae.jpg", import.meta.url).href;
+const milkshakeMorangoImage = new URL("../../output/imagegen/milkshake-morango-de-domingo.jpg", import.meta.url).href;
 
 export const categories: Category[] = [
   {
@@ -33,3 +33,4 @@ export const categories: Category[] = [
     ctaLabel: "Escolher bebida",
   },
 ];
+
