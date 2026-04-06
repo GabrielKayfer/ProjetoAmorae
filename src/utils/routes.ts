@@ -1,6 +1,7 @@
-﻿export const routes = {
-  home: "/",
-  catalog: "/catalogo",
-  product: (slug = ":slug") => `/produto/${slug}`,
-  cart: "/carrinho",
+export const routes = {
+  home: '/',
+  catalog: '/cardapio',
+  product: (slug: string = ':slug') => `/cardapio/${slug}`,
+  cart: '/carrinho',
+  login: '/login',
 };

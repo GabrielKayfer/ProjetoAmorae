@@ -1,4 +1,5 @@
-﻿import styled from "styled-components";
+import { useState, useEffect } from "react";
+import styled from "styled-components";
 
 import Container from "../components/layout/Container";
 import PageSection from "../components/layout/PageSection";
@@ -6,6 +7,7 @@ import { ProductList } from "../components/product/ProductList";
 import Text from "../components/ui/Text";
 import Title from "../components/ui/Title";
 import { productsService } from "../services/products.service";
+import type { Product } from "../types/product";
 
 const Intro = styled.div`
   max-width: 46rem;
@@ -41,13 +43,74 @@ const Divider = styled.div`
   background: rgba(2, 89, 81, 0.1);
 `;
 
+const SpinnerContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: ${({ theme }) => theme.spacing.xl};
+`;
+
+const Spinner = styled.div`
+  width: 40px;
+  height: 40px;
+  border: 4px solid rgba(2, 89, 81, 0.2);
+  border-left-color: ${({ theme }) => theme.colors.brand};
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+`;
+
 export function CatalogPage() {
-  const products = productsService.list();
+  const [loading, setLoading] = useState(true);
+  const [products, setProducts] = useState<Product[]>([]);
+
+  useEffect(() => {
+    let isMounted = true;
+
+    // Simular chamada assíncrona
+    const fetchProducts = () => {
+      setTimeout(() => {
+        if (isMounted) {
+          setProducts(productsService.list());
+          setLoading(false);
+        }
+      }, 1500); // tempo de loading de 1.5s
+    };
+
+    fetchProducts();
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
+  if (loading) {
+    return (
+      <PageSection>
+        <Container>
+          <Intro>
+            <Eyebrow>Cardápio Amoraê</Eyebrow>
+            <Title as="h1" $level="headingLg">
+              Taças, clássicos da casa, bebidas e lembranças para levar um pouco da marca com você.
+            </Title>
+          </Intro>
+          <SpinnerContainer>
+            <Spinner />
+          </SpinnerContainer>
+        </Container>
+      </PageSection>
+    );
+  }
+
   const brandExtensionProducts = products.filter((product) => product.line === "brand-extension");
   const editorialProducts = products.filter((product) => product.line === "editorial");
-  const tacas = productsService.listByCategory("tacas-especiais");
-  const compartilhar = productsService.listByCategory("para-compartilhar");
-  const bebidas = productsService.listByCategory("milkshakes-e-bebidas");
+  const tacas = products.filter((product) => product.category === "tacas-especiais");
+  const compartilhar = products.filter((product) => product.category === "para-compartilhar");
+  const bebidas = products.filter((product) => product.category === "milkshakes-e-bebidas");
 
   return (
     <PageSection>
