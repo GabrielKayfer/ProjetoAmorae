@@ -28,6 +28,29 @@ export function useFavorites() {
     }
   }, [favorites, isAuthenticated]);
 
+  useEffect(() => {
+    if (isAuthenticated) {
+      const storedFavorites = localStorage.getItem('favorites');
+      if (storedFavorites) {
+        try {
+          const parsed = JSON.parse(storedFavorites);
+          if (Array.isArray(parsed) && parsed.length > 0) {
+            console.info('Sincronizando favoritos locais com o servidor:', parsed);
+            // Simula envio pro servidor
+
+            // Unifica os favoritos
+            setFavorites(prev => Array.from(new Set([...prev, ...parsed])));
+
+            // Limpa o localStorage para que o banco seja a "Single Source of Truth"
+            localStorage.removeItem('favorites');
+          }
+        } catch (e) {
+          console.error('Failed to parse favorites during sync', e);
+        }
+      }
+    }
+  }, [isAuthenticated]);
+
   const toggleFavorite = (productId: string) => {
     setFavorites((prev) => {
       const isFavorite = prev.includes(productId);

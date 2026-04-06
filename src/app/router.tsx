@@ -9,6 +9,8 @@ import { HomePage } from "../pages/Home";
 import { NotFoundPage } from "../pages/NotFound";
 import { ProductPage } from "../pages/Product";
 import { LoginPage } from "../pages/Login";
+import { ProfilePage } from "../pages/Profile";
+import { ProtectedRoute } from "../components/auth/ProtectedRoute";
 import { routes } from "../utils/routes";
 
 const Shell = styled.div`
@@ -33,6 +35,7 @@ export function AppRouter() {
             <Route path={routes.product()} element={<ProductPage />} />
             <Route path={routes.cart} element={<CartPage />} />
             <Route path={routes.login} element={<LoginPage />} />
+            <Route path={routes.profile} element={<ProtectedRoute><ProfilePage /></ProtectedRoute>} />
             <Route path="*" element={<NotFoundPage />} />
           </Routes>
         </Main>
