@@ -1,4 +1,4 @@
-﻿import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import styled from "styled-components";
 
 import { Footer } from "../components/layout/Footer";
@@ -8,6 +8,7 @@ import { CatalogPage } from "../pages/Catalog";
 import { HomePage } from "../pages/Home";
 import { NotFoundPage } from "../pages/NotFound";
 import { ProductPage } from "../pages/Product";
+import { LoginPage } from "../pages/Login";
 import { routes } from "../utils/routes";
 
 const Shell = styled.div`
@@ -31,6 +32,7 @@ export function AppRouter() {
             <Route path={routes.catalog} element={<CatalogPage />} />
             <Route path={routes.product()} element={<ProductPage />} />
             <Route path={routes.cart} element={<CartPage />} />
+            <Route path={routes.login} element={<LoginPage />} />
             <Route path="*" element={<NotFoundPage />} />
           </Routes>
         </Main>
