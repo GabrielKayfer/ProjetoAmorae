@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, ReactNode } from 'react';
+import React, { createContext, useContext, useState, ReactNode, useEffect } from 'react';
 import type { User } from '../types/auth';
 import { authService } from '../services/auth.service';
 
@@ -32,6 +32,17 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     authService.logout();
     setUser(null);
   };
+
+  useEffect(() => {
+    const handleAuthLogout = () => {
+      logout();
+    };
+
+    window.addEventListener('auth:logout', handleAuthLogout);
+    return () => {
+      window.removeEventListener('auth:logout', handleAuthLogout);
+    };
+  }, []);
 
   const isAuthenticated = !!user;
 

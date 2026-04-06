@@ -4,4 +4,5 @@ export const routes = {
   product: (slug: string = ':slug') => `/cardapio/${slug}`,
   cart: '/carrinho',
   login: '/login',
+  profile: '/profile',
 };
