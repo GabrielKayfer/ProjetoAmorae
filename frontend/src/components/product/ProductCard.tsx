@@ -1,5 +1,7 @@
 ﻿import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { useFavorites } from "../../hooks/useFavorites";
+import { useAuth } from "../../context/AuthContext";
 
 import type { Product } from "../../types/product";
 import { formatCurrency } from "../../utils/currency";
@@ -36,6 +38,49 @@ const Thumb = styled.img`
   border-radius: 1.3rem;
   background: ${({ theme }) => theme.colors.background};
 `;
+
+
+const HeartButton = styled.button<{ $isFavorite: boolean }>`
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: rgba(255, 255, 255, 0.8);
+  border: none;
+  border-radius: 50%;
+  width: 2.5rem;
+  height: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: ${({ theme }) => theme.shadows.sm};
+  transition: all 0.2s ease;
+  z-index: 10;
+
+  &:hover {
+    transform: scale(1.1);
+    background: rgba(255, 255, 255, 1);
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
+
+  svg {
+    width: 1.2rem;
+    height: 1.2rem;
+    fill: ${({ $isFavorite, theme }) => ($isFavorite ? theme.colors.brand : 'none')};
+    stroke: ${({ $isFavorite, theme }) => ($isFavorite ? theme.colors.brand : theme.colors.textMuted)};
+    stroke-width: 2;
+    transition: all 0.2s ease;
+  }
+`;
+
+const HeartIcon = () => (
+  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+    <path strokeLinecap="round" strokeLinejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
+  </svg>
+);
 
 const Tag = styled.span`
   position: absolute;
@@ -123,9 +168,25 @@ interface ProductCardProps {
 }
 
 export function ProductCard({ product }: ProductCardProps) {
+  const { toggleFavorite, isFavorite } = useFavorites();
+  const { isAuthenticated } = useAuth();
+
+  const handleFavoriteClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    if (!isAuthenticated) {
+      alert('Faça login para salvar seus favoritos na sua conta!');
+    }
+    toggleFavorite(product.id);
+  };
+
+  const isFav = isFavorite(product.id);
+
   return (
     <Card>
       <Media>
+        <HeartButton onClick={handleFavoriteClick} $isFavorite={isFav} aria-label="Favoritar">
+          <HeartIcon />
+        </HeartButton>
         <Thumb src={product.imageUrl} alt={product.name} />
         <Tag>{product.badge}</Tag>
       </Media>
