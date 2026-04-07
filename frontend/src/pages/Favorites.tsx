@@ -1,13 +1,16 @@
 import { useState, useEffect } from "react";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 import Container from "../components/layout/Container";
 import PageSection from "../components/layout/PageSection";
 import { ProductList } from "../components/product/ProductList";
 import Text from "../components/ui/Text";
 import Title from "../components/ui/Title";
+import Button from "../components/ui/Button";
 import { useFavorites } from "../hooks/useFavorites";
 import { productsService } from "../services/products.service";
 import type { Product } from "../types/product";
+import { routes } from "../utils/routes";
 
 const Intro = styled.div`
   max-width: 46rem;
@@ -29,6 +32,10 @@ const EmptyState = styled.div`
   padding: ${({ theme }) => theme.spacing.xl} 0;
   background: rgba(2, 89, 81, 0.05);
   border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: ${({ theme }) => theme.spacing.md};
 `;
 
 export function FavoritesPage() {
@@ -60,6 +67,7 @@ export function FavoritesPage() {
         ) : (
           <EmptyState>
             <Text>Você ainda não tem nenhum produto favorito.</Text>
+            <Button as={Link} to={routes.catalog}>Ir para o Catálogo</Button>
           </EmptyState>
         )}
       </Container>
