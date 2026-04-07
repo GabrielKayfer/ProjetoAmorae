@@ -10,6 +10,7 @@ import { NotFoundPage } from "../pages/NotFound";
 import { ProductPage } from "../pages/Product";
 import { LoginPage } from "../pages/Login";
 import { ProfilePage } from "../pages/Profile";
+import { FavoritesPage } from "../pages/Favorites";
 import { ProtectedRoute } from "../components/auth/ProtectedRoute";
 import { routes } from "../utils/routes";
 
@@ -36,6 +37,7 @@ export function AppRouter() {
             <Route path={routes.cart} element={<CartPage />} />
             <Route path={routes.login} element={<LoginPage />} />
             <Route path={routes.profile} element={<ProtectedRoute><ProfilePage /></ProtectedRoute>} />
+            <Route path={routes.favorites} element={<FavoritesPage />} />
             <Route path="*" element={<NotFoundPage />} />
           </Routes>
         </Main>
