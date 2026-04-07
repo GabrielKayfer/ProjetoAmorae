@@ -1,12 +1,12 @@
 # Estágio de build
 FROM eclipse-temurin:21-jdk-jammy AS builder
 WORKDIR /app
-COPY .mvn/ .mvn
-COPY mvnw pom.xml ./
+COPY backend/.mvn/ .mvn
+COPY backend/mvnw backend/pom.xml ./
 # Faz o download das dependências para cache
 RUN ./mvnw dependency:go-offline
 
-COPY src ./src
+COPY backend/src ./src
 # Compila e empacota a aplicação
 RUN ./mvnw clean package -DskipTests
 
