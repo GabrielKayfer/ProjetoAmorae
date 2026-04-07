@@ -1,9 +1,10 @@
-﻿import { Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 import { useCart } from "../../hooks/useCart";
 import { routes } from "../../utils/routes";
 import Container from "./Container";
+import { useAuth } from "../../context/AuthContext";
 
 const Wrapper = styled.header`
   position: sticky;
@@ -105,9 +106,23 @@ const UtilityNav = styled.nav`
     justify-content: flex-end;
   }
 
-  a {
+  a, span {
     color: ${({ theme }) => theme.colors.brandDark};
     font-size: ${({ theme }) => theme.typography.scale.bodySm};
+  }
+
+  button {
+    background: none;
+    border: none;
+    color: ${({ theme }) => theme.colors.brandDark};
+    font-size: ${({ theme }) => theme.typography.scale.bodySm};
+    font-weight: ${({ theme }) => theme.typography.weight.bold};
+    cursor: pointer;
+    text-decoration: underline;
+
+    &:hover {
+      color: ${({ theme }) => theme.colors.brand};
+    }
   }
 
   @media (max-width: ${({ theme }) => theme.breakpoints.lg}) {
@@ -115,6 +130,10 @@ const UtilityNav = styled.nav`
       justify-content: flex-start;
     }
   }
+`;
+
+const AuthUser = styled.span`
+  font-weight: ${({ theme }) => theme.typography.weight.semibold};
 `;
 
 const StoreRow = styled.div`
@@ -176,6 +195,7 @@ const SrOnly = styled.label`
 
 export function Header() {
   const { itemCount } = useCart();
+  const { isAuthenticated, user, logout } = useAuth();
 
   return (
     <Wrapper>
@@ -196,13 +216,23 @@ export function Header() {
           <UtilityNav aria-label="Acesso rápido">
             <ul>
               <li>
-                <Link to={routes.home + "#destaques"}>Favoritos</Link>
+                <Link to={routes.favorites}>Favoritos</Link>
               </li>
               <li>
-                <Link to={routes.home + "#beneficios"}>A marca</Link>
+                <Link to={routes.about}>A marca</Link>
               </li>
               <li>
-                <Link to={routes.home + "#footer-contact"}>Contato</Link>
+                <Link to={routes.contact}>Contato</Link>
+              </li>
+              <li>
+                {isAuthenticated ? (
+                  <>
+                    <AuthUser>Olá, {user?.name}</AuthUser>{' '}
+                    <button onClick={logout}>Sair</button>
+                  </>
+                ) : (
+                  <Link to={routes.login}>Entrar</Link>
+                )}
               </li>
             </ul>
           </UtilityNav>

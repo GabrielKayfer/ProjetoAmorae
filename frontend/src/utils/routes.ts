@@ -6,4 +6,6 @@ export const routes = {
   login: '/login',
   profile: '/profile',
   favorites: '/favoritos',
+  about: '/sobre',
+  contact: '/contato',
 };

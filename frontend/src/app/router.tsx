@@ -11,6 +11,8 @@ import { ProductPage } from "../pages/Product";
 import { LoginPage } from "../pages/Login";
 import { ProfilePage } from "../pages/Profile";
 import { FavoritesPage } from "../pages/Favorites";
+import { AboutPage } from "../pages/About";
+import { ContactPage } from "../pages/Contact";
 import { ProtectedRoute } from "../components/auth/ProtectedRoute";
 import { routes } from "../utils/routes";
 
@@ -38,6 +40,8 @@ export function AppRouter() {
             <Route path={routes.login} element={<LoginPage />} />
             <Route path={routes.profile} element={<ProtectedRoute><ProfilePage /></ProtectedRoute>} />
             <Route path={routes.favorites} element={<FavoritesPage />} />
+            <Route path={routes.about} element={<AboutPage />} />
+            <Route path={routes.contact} element={<ContactPage />} />
             <Route path="*" element={<NotFoundPage />} />
           </Routes>
         </Main>
