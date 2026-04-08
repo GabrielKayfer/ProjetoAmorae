@@ -1,7 +1,8 @@
-
 import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
 import { useNavigate, useLocation, Navigate } from 'react-router-dom';
+import { useState } from 'react';
+import axios from 'axios';
 
 import Container from '../components/layout/Container';
 import PageSection from '../components/layout/PageSection';
@@ -62,14 +63,22 @@ const ErrorText = styled.span`
   font-size: ${({ theme }) => theme.typography.scale.caption};
 `;
 
+const GlobalErrorText = styled(ErrorText)`
+  text-align: center;
+  display: block;
+  margin-top: ${({ theme }) => theme.spacing.sm};
+`;
+
 interface LoginFormInputs {
   email: string;
+  password?: string;
 }
 
 export function LoginPage() {
   const { login, loading, isAuthenticated } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
+  const [authError, setAuthError] = useState<string | null>(null);
 
   const {
     register,
@@ -84,8 +93,17 @@ export function LoginPage() {
   }
 
   const onSubmit = async (data: LoginFormInputs) => {
-    await login(data.email);
-    navigate(from, { replace: true });
+    setAuthError(null);
+    try {
+      await login(data.email, data.password);
+      navigate(from, { replace: true });
+    } catch (error) {
+      if (axios.isAxiosError(error) && error.response?.status === 401) {
+        setAuthError('E-mail ou senha inválidos');
+      } else {
+        setAuthError('Ocorreu um erro ao tentar fazer login. Tente novamente mais tarde.');
+      }
+    }
   };
 
   return (
@@ -110,9 +128,21 @@ export function LoginPage() {
               {errors.email && <ErrorText>{errors.email.message}</ErrorText>}
             </div>
 
+            <div>
+              <Input
+                type="password"
+                placeholder="Sua senha"
+                {...register('password', { required: 'Senha é obrigatória' })}
+                style={{ width: '100%', boxSizing: 'border-box' }}
+              />
+              {errors.password && <ErrorText>{errors.password.message}</ErrorText>}
+            </div>
+
             <Button type="submit" disabled={loading}>
               {loading ? 'Entrando...' : 'Entrar'}
             </Button>
+
+            {authError && <GlobalErrorText>{authError}</GlobalErrorText>}
           </Form>
         </FormContainer>
       </Container>

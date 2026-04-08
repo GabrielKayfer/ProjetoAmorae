@@ -1,21 +1,20 @@
-import type { User } from '../types/auth';
+import type { User, AuthResponse } from '../types/auth';
+import { api } from '../api/api';
 
 export const authService = {
-  login(email: string): Promise<{ user: User; token: string }> {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        const mockUser: User = {
-          id: '1',
-          name: 'Usuário Teste',
-          email: email,
-        };
-        const token = 'fake-jwt-token-12345';
-        localStorage.setItem('auth_token', token);
-        resolve({ user: mockUser, token });
-      }, 1500);
-    });
+  async login(email: string, password?: string): Promise<{ user: User; token: string }> {
+    const response = await api.post<AuthResponse>('/auth/login', { email, password });
+    const { token, name, email: userEmail } = response.data;
+
+    const user: User = { name, email: userEmail };
+
+    localStorage.setItem('auth_token', token);
+    localStorage.setItem('auth_user', JSON.stringify(user));
+
+    return { user, token };
   },
   logout(): void {
     localStorage.removeItem('auth_token');
+    localStorage.removeItem('auth_user');
   }
 };

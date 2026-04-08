@@ -1,5 +1,11 @@
 export interface User {
-  id: string;
+  id?: string;
+  name: string;
+  email: string;
+}
+
+export interface AuthResponse {
+  token: string;
   name: string;
   email: string;
 }
