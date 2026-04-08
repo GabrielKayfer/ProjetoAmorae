@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
-
+import { api } from '../api/api';
 
 export function useFavorites() {
   const { isAuthenticated } = useAuth();
@@ -30,44 +30,83 @@ export function useFavorites() {
 
   useEffect(() => {
     if (isAuthenticated) {
-      const storedFavorites = localStorage.getItem('favorites');
-      if (storedFavorites) {
+      const fetchFavorites = async () => {
         try {
-          const parsed = JSON.parse(storedFavorites);
-          if (Array.isArray(parsed) && parsed.length > 0) {
-            console.info('Sincronizando favoritos locais com o servidor:', parsed);
-            // Simula envio pro servidor
+          const response = await api.get('/favorites');
+          if (response.data && Array.isArray(response.data.favorites)) {
+            const serverFavorites = response.data.favorites;
+            const storedFavorites = localStorage.getItem('favorites');
 
-            // Unifica os favoritos
-            setFavorites(prev => Array.from(new Set([...prev, ...parsed])));
+            let localFavorites: string[] = [];
+            if (storedFavorites) {
+              try {
+                localFavorites = JSON.parse(storedFavorites);
+                if (!Array.isArray(localFavorites)) {
+                   localFavorites = [];
+                }
+              } catch (e) {
+                // ignore
+              }
+            }
 
-            // Limpa o localStorage para que o banco seja a "Single Source of Truth"
-            localStorage.removeItem('favorites');
+            // Sincroniza (adiciona os locais ao servidor, otimizado)
+            // Aqui poderíamos iterar pelos locais e mandar pro servidor se não existirem
+            // Por enquanto, faremos o unificado apenas localmente
+            const unifiedFavorites = Array.from(new Set([...serverFavorites, ...localFavorites]));
+            setFavorites(unifiedFavorites);
+
+            // Se tinha local e eles não estavam no servidor, sincroniza um por um
+            if (localFavorites.length > 0) {
+                 localFavorites.forEach(async (id) => {
+                     if (!serverFavorites.includes(id)) {
+                         try {
+                             await api.post(`/favorites/${id}`);
+                         } catch (e) {
+                             console.error("Falha ao sincronizar favorito local", id, e);
+                         }
+                     }
+                 });
+                 // Limpa o localStorage para que o banco seja a "Single Source of Truth"
+                 localStorage.removeItem('favorites');
+            }
+
           }
-        } catch (e) {
-          console.error('Failed to parse favorites during sync', e);
+        } catch (error) {
+          console.error("Erro ao buscar favoritos", error);
         }
       }
+
+      fetchFavorites();
     }
   }, [isAuthenticated]);
 
-  const toggleFavorite = (productId: string) => {
+  const toggleFavorite = async (productId: string) => {
+    const isFavorite = favorites.includes(productId);
+
+    // Atualiza estado local imediatamente (Optimistic UI)
     setFavorites((prev) => {
-      const isFavorite = prev.includes(productId);
-      const newFavorites = isFavorite
+      return isFavorite
         ? prev.filter((id) => id !== productId)
         : [...prev, productId];
-
-      if (isAuthenticated) {
-        if (!isFavorite) {
-          console.log(`Chamando API POST /favorites para o produto ${productId}`);
-        } else {
-          console.log(`Chamando API DELETE /favorites para o produto ${productId}`);
-        }
-      }
-
-      return newFavorites;
     });
+
+    if (isAuthenticated) {
+      try {
+        if (!isFavorite) {
+          await api.post(`/favorites/${productId}`);
+        } else {
+          await api.delete(`/favorites/${productId}`);
+        }
+      } catch (error) {
+        console.error("Erro ao atualizar favorito no servidor", error);
+        // Em caso de erro, reverte a UI otimista
+        setFavorites((prev) => {
+          return isFavorite
+            ? [...prev, productId]
+            : prev.filter((id) => id !== productId);
+        });
+      }
+    }
   };
 
   const isFavorite = (productId: string) => favorites.includes(productId);
