@@ -32,6 +32,10 @@ public class User {
     @Column(nullable = false)
     private String password;
 
+    @Enumerated(EnumType.STRING)
+    @Builder.Default
+    private UserRole role = UserRole.USER;
+
     @ManyToMany
     @JoinTable(
         name = "user_favorites",

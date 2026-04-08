@@ -1,6 +1,7 @@
 package com.amorae.api.config;
 
 import com.amorae.api.model.User;
+import com.amorae.api.model.UserRole;
 import com.amorae.api.repository.UserRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
@@ -18,6 +19,7 @@ public class DataInitializer {
                         .name("Admin")
                         .email("admin@amorae.com")
                         .password(passwordEncoder.encode("admin123"))
+                        .role(UserRole.ADMIN)
                         .build();
                 userRepository.save(adminUser);
                 System.out.println("Usuário de teste (admin@amorae.com) criado com sucesso.");
