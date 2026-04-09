@@ -52,7 +52,7 @@ public class AuthController {
             Optional<User> userOptional = userRepository.findByEmail(loginRequest.getEmail());
             if (userOptional.isPresent()) {
                 User user = userOptional.get();
-                return ResponseEntity.ok(new AuthResponse(jwt, user.getName(), user.getEmail()));
+                return ResponseEntity.ok(new AuthResponse(jwt, user.getName(), user.getEmail(), user.getRole().name()));
             } else {
                  Map<String, String> errorResponse = new HashMap<>();
                  errorResponse.put("error", "Usuário não encontrado após autenticação.");
