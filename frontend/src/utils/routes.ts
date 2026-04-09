@@ -8,4 +8,5 @@ export const routes = {
   favorites: '/favoritos',
   about: '/sobre',
   contact: '/contato',
+  admin: '/admin',
 };

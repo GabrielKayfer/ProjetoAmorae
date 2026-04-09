@@ -228,6 +228,14 @@ export function Header() {
                 {isAuthenticated ? (
                   <>
                     <AuthUser>Olá, {user?.name}</AuthUser>{' '}
+                    {user?.role === 'ADMIN' && (
+                      <Link
+                        to={routes.admin}
+                        style={{ fontWeight: 'bold', color: 'var(--brand)', textDecoration: 'none' }}
+                      >
+                        ⚙️ Painel Admin
+                      </Link>
+                    )}{' '}
                     <button onClick={logout}>Sair</button>
                   </>
                 ) : (
