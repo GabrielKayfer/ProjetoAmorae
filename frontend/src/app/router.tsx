@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes, Outlet } from "react-router-dom";
 import styled from "styled-components";
 
 import { Footer } from "../components/layout/Footer";
@@ -14,6 +14,9 @@ import { FavoritesPage } from "../pages/Favorites";
 import { AboutPage } from "../pages/About";
 import { ContactPage } from "../pages/Contact";
 import { ProtectedRoute } from "../components/auth/ProtectedRoute";
+import { AdminRoute } from "../components/auth/AdminRoute";
+import { AdminLayout } from "../components/layout/AdminLayout";
+import { AdminDashboard } from "../pages/admin/AdminDashboard";
 import { routes } from "../utils/routes";
 
 const Shell = styled.div`
@@ -26,27 +29,50 @@ const Main = styled.main`
   flex: 1;
 `;
 
+// Layout for the main storefront
+function StoreLayout() {
+  return (
+    <Shell>
+      <Header />
+      <Main>
+        <Outlet />
+      </Main>
+      <Footer />
+    </Shell>
+  );
+}
+
 export function AppRouter() {
   return (
     <BrowserRouter>
-      <Shell>
-        <Header />
-        <Main>
-          <Routes>
-            <Route path={routes.home} element={<HomePage />} />
-            <Route path={routes.catalog} element={<CatalogPage />} />
-            <Route path={routes.product()} element={<ProductPage />} />
-            <Route path={routes.cart} element={<CartPage />} />
-            <Route path={routes.login} element={<LoginPage />} />
-            <Route path={routes.profile} element={<ProtectedRoute><ProfilePage /></ProtectedRoute>} />
-            <Route path={routes.favorites} element={<FavoritesPage />} />
-            <Route path={routes.about} element={<AboutPage />} />
-            <Route path={routes.contact} element={<ContactPage />} />
-            <Route path="*" element={<NotFoundPage />} />
-          </Routes>
-        </Main>
-        <Footer />
-      </Shell>
+      <Routes>
+        {/* Storefront Routes */}
+        <Route element={<StoreLayout />}>
+          <Route path={routes.home} element={<HomePage />} />
+          <Route path={routes.catalog} element={<CatalogPage />} />
+          <Route path={routes.product()} element={<ProductPage />} />
+          <Route path={routes.cart} element={<CartPage />} />
+          <Route path={routes.login} element={<LoginPage />} />
+          <Route path={routes.profile} element={<ProtectedRoute><ProfilePage /></ProtectedRoute>} />
+          <Route path={routes.favorites} element={<FavoritesPage />} />
+          <Route path={routes.about} element={<AboutPage />} />
+          <Route path={routes.contact} element={<ContactPage />} />
+          <Route path="*" element={<NotFoundPage />} />
+        </Route>
+
+        {/* Admin Routes */}
+        <Route
+          path={routes.admin}
+          element={
+            <AdminRoute>
+              <AdminLayout />
+            </AdminRoute>
+          }
+        >
+          <Route index element={<AdminDashboard />} />
+          <Route path="*" element={<AdminDashboard />} /> {/* Fallback for incomplete admin routes */}
+        </Route>
+      </Routes>
     </BrowserRouter>
   );
 }
